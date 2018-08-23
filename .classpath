@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/spigot-1.8.8-R0.1-SNAPSHOT-latest"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/item-nbt-api-plugin-1.7-SNAPSHOT"/>
+	<classpathentry kind="output" path="out/production/刷怪笼"/>
+</classpath>

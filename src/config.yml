@@ -1,0 +1,33 @@
+#只有刷怪笼所有者可以破坏刷怪笼
+Only-owner-can-break: true
+Only-owner-can-break-tip: '&C只有刷怪笼的所有者可以破坏刷怪笼！'
+
+#掉落破坏的刷怪笼
+Drop-break-spawner: true
+
+#部分配置文件
+languages:
+  help:
+    - '&a-----------------[&c&lEpicSpawner&a]-----------------'
+    - '&a/es help &bView helps'
+    - '&a/es create {name} &bCreate a new spawner and open the edit gui'
+    - '&a/es get {name} [for player] &bGet a spawner item.'
+    - '&a/es delete {name} &bDelete a spawner.&cWarning!'
+    - '&a/es edit {name} &bOpen the edit gui'
+    - '&a/es list &bView all spawner'
+    - '&a/es reload &bReload configurations'
+  arguments-error: '&c参数错误！未知的子命令类型'
+  arguments-length: '&c参数错误！提供的参数数量未被预期'
+  no-permission: '&c你没有足够的权限这么做！'
+  spawner-exist: '&c该刷怪笼已存在！无法创建'
+  spawner-isnt-exist: '&c该刷怪笼不存在'
+  create-success: '&a创建成功'
+  sender-isnt-player: '&c命令的发送者必须是一个玩家'
+  give-success: '&a给予成功'
+  player-isnt-exist: '&c玩家不在线或不存在'
+  delete-success: '&a删除成功'
+  reload-success: '&a重载成功'
+
+  please-input-text: '&a请打开聊天栏(&b&lEnter OR T&a)输入你想要设置的值'
+  do-success: '&a操作成功！'
+  arguments-value: '&c参数错误！输入的内容未被预期'

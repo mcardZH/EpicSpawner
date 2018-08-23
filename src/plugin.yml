@@ -1,0 +1,9 @@
+name: EpicSpawner
+main: cn.minezone.spawner.SpawnerPlugin
+version: Try
+
+author: mcard
+
+commands:
+  epicspawner:
+    aliases: [es,spawner,spawners]

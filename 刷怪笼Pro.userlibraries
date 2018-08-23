@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="item-nbt-api-plugin-1.7-SNAPSHOT">
+    <archive path="C:/Users/HP/Desktop/MC Develop Lib/item-nbt-api-plugin-1.7-SNAPSHOT.jar" />
+  </library>
+  <library name="spigot-1.8.8-R0.1-SNAPSHOT-latest">
+    <archive path="C:/Users/HP/Desktop/Temp/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" />
+  </library>
+  <library name="spigot-1.10.2-R0.1-SNAPSHOT-latest">
+    <archive path="C:/Users/HP/Desktop/Temp/spigot-1.10.2-R0.1-SNAPSHOT-latest.jar" />
+  </library>
+  <library name="spigot-1.8.8-R0.1-SNAPSHOT-latest">
+    <archive path="C:/Users/HP/Desktop/Temp/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar" />
+  </library>
+  <library name="【全息】HolographicDisplays">
+    <archive path="D:/TencentData/1459974942/FileRecv/【全息】HolographicDisplays.jar" />
+  </library>
+</eclipse-userlibraries>
+
