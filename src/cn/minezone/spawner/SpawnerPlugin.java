@@ -46,6 +46,9 @@ public class SpawnerPlugin extends JavaPlugin {
         Bukkit.getPluginCommand("epicspawner").setExecutor(new CommandHandler(this));
         Bukkit.getPluginCommand("epicspawner").setTabCompleter(new CommandHandler(this));
 
+        //启用插件数据统计
+        new Metrics(this);
+
         //启动调度器
         new MobRefreshRunnable(this).runTaskTimer(this, 0, 1);
     }
