@@ -137,7 +137,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
     private void commands(InventoryClickEvent e, String spawner) {
         if (e.getSlot() == 0) {
             //返回
-            Bukkit.dispatchCommand(e.getWhoClicked(), "epicspawner edit " + spawner);
+            Bukkit.dispatchCommand((Player) e.getWhoClicked(), "epicspawner edit " + spawner);
             return;
         }
         Spawner s = SpawnerApi.getSpawner(spawner);
@@ -149,13 +149,13 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.do-success", "languages.do-success")));
-            Bukkit.dispatchCommand(e.getWhoClicked(), "epicspawner edit " + spawner);
+            ((Player) e.getWhoClicked()).sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.do-success", "languages.do-success")));
+            Bukkit.dispatchCommand((Player)e.getWhoClicked(), "epicspawner edit " + spawner);
             return;
         }
         if (e.getSlot() == 52) {
             //增加一条
-            e.getWhoClicked().sendMessage("§a请输入指令，无需带/");
+            ((Player) e.getWhoClicked()).sendMessage("§a请输入指令，无需带/");
             PlayerInputUtil.getPlayerChat((Player) e.getWhoClicked(), this, "addCommand", e.getInventory(), spawner, e);
             Bukkit.getScheduler().runTask(plugin, () -> e.getWhoClicked().closeInventory());
             return;
@@ -196,7 +196,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
             inv.setItem(integer, item);
         }
         inv.setItem(0, new ItemBuilder(Material.ARROW).setItemDisplayName("§a§l<- 返回上一页").create());
-        inv.setItem(46, new ItemBuilder(Material.BARRIER).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
+        inv.setItem(46, new ItemBuilder(Material.REDSTONE).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
         inv.setItem(52, new ItemBuilder(Material.NETHER_STAR).setItemDisplayName("§a§l新增命令").addItemLore("§a注意：命令将由控制台执行").create());
 
         int count = 10;
@@ -226,13 +226,13 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.do-success", "languages.do-success")));
-            Bukkit.dispatchCommand(e.getWhoClicked(), "epicspawner edit " + spawner);
+            ((Player) e.getWhoClicked()).sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.do-success", "languages.do-success")));
+            Bukkit.dispatchCommand((Player)e.getWhoClicked(), "epicspawner edit " + spawner);
             return;
         }
         if (e.getSlot() == 0) {
             //返回
-            Bukkit.dispatchCommand(e.getWhoClicked(), "epicspawner edit " + spawner);
+            Bukkit.dispatchCommand((Player)e.getWhoClicked(), "epicspawner edit " + spawner);
             return;
         }
         if (e.getSlot() == 52) {
@@ -242,9 +242,9 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
                     now.append(value.name()).append(", ");
                 }
             }
-            e.getWhoClicked().sendMessage(now.toString());
-            e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.please-input-text", "languages.please-input-text")));
-            e.getWhoClicked().sendMessage("§e输入方式：[生物类型(上面这些)] [生物名称(生成时的名称)] \n后者可以省略，两者中间有一个空格");
+            ((Player) e.getWhoClicked()).sendMessage(now.toString());
+            ((Player) e.getWhoClicked()).sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.please-input-text", "languages.please-input-text")));
+            ((Player) e.getWhoClicked()).sendMessage("§e输入方式：[生物类型(上面这些)] [生物名称(生成时的名称)] \n后者可以省略，两者中间有一个空格");
             PlayerInputUtil.getPlayerChat((Player) e.getWhoClicked(), this, "addEntity", e.getInventory(), spawner, e);
             Bukkit.getScheduler().runTask(plugin, () -> e.getWhoClicked().closeInventory());
             return;
@@ -282,7 +282,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
             inv.setItem(integer, item);
         }
         inv.setItem(0, new ItemBuilder(Material.ARROW).setItemDisplayName("§a§l<- 返回上一页").create());
-        inv.setItem(46, new ItemBuilder(Material.BARRIER).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
+        inv.setItem(46, new ItemBuilder(Material.REDSTONE).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
         inv.setItem(52, new ItemBuilder(Material.NETHER_STAR).setItemDisplayName("§a§l增加生物").create());
 
         int count = 10;
@@ -323,8 +323,14 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.do-success", "languages.do-success")));
-            Bukkit.dispatchCommand(e.getWhoClicked(), "epicspawner edit " + spawner);
+            for (int i = 0; i < e.getInventory().getSize(); i++) {
+                e.getInventory().setItem(i, new ItemStack(Material.AIR));
+            }
+            ((Player) e.getWhoClicked()).sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.do-success", "languages.do-success")));
+            Bukkit.getScheduler().runTask(plugin, () -> {
+                e.getWhoClicked().closeInventory();
+                Bukkit.dispatchCommand((Player)e.getWhoClicked(), "epicspawner edit " + spawner);
+            });
             return;
         }
         if (e.getSlot() == 0) {
@@ -367,7 +373,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
                     ex.printStackTrace();
                 }
             }
-            Bukkit.dispatchCommand(e.getWhoClicked(), "epicspawner edit " + spawner);
+            Bukkit.dispatchCommand((Player)e.getWhoClicked(), "epicspawner edit " + spawner);
             return;
         }
         if (e.getSlot() == 52) {
@@ -409,7 +415,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
     private void lore(InventoryClickEvent e, String spawner) {
         if (e.getSlot() == 0) {
             //返回
-            Bukkit.dispatchCommand(e.getWhoClicked(), "epicspawner edit " + spawner);
+            Bukkit.dispatchCommand((Player)e.getWhoClicked(), "epicspawner edit " + spawner);
             return;
         }
         Spawner s = SpawnerApi.getSpawner(spawner);
@@ -421,13 +427,13 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.do-success", "languages.do-success")));
-            Bukkit.dispatchCommand(e.getWhoClicked(), "epicspawner edit " + spawner);
+            ((Player) e.getWhoClicked()).sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.do-success", "languages.do-success")));
+            Bukkit.dispatchCommand((Player)e.getWhoClicked(), "epicspawner edit " + spawner);
             return;
         }
         if (e.getSlot() == 52) {
             //增加一条
-            e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.please-input-text", "languages.please-input-text")));
+            ((Player) e.getWhoClicked()).sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.please-input-text", "languages.please-input-text")));
             PlayerInputUtil.getPlayerChat((Player) e.getWhoClicked(), this, "addLore", e.getInventory(), spawner, e);
             Bukkit.getScheduler().runTask(plugin, () -> e.getWhoClicked().closeInventory());
             return;
@@ -468,7 +474,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
             inv.setItem(integer, item);
         }
         inv.setItem(0, new ItemBuilder(Material.ARROW).setItemDisplayName("§a§l<- 返回上一页").create());
-        inv.setItem(46, new ItemBuilder(Material.BARRIER).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
+        inv.setItem(46, new ItemBuilder(Material.REDSTONE).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
         inv.setItem(52, new ItemBuilder(Material.NETHER_STAR).setItemDisplayName("§a§l新增Lore").create());
 
         int count = 10;
@@ -491,7 +497,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
     private void main(InventoryClickEvent e) {
         if (e.getSlot() == 10) {
             //设置名称
-            e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.please-input-text", "languages.please-input-text")));
+            ((Player) e.getWhoClicked()).sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.please-input-text", "languages.please-input-text")));
             PlayerInputUtil.getPlayerChat((Player) e.getWhoClicked(), this, "setTitle",
                     e.getInventory(), ChatColor.stripColor(e.getInventory().getTitle()));
             Bukkit.getScheduler().runTask(plugin, () -> e.getWhoClicked().closeInventory());
@@ -509,7 +515,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
                 inv.setItem(integer, item);
             }
             inv.setItem(0, new ItemBuilder(Material.ARROW).setItemDisplayName("§a§l<- 返回上一页").create());
-            inv.setItem(46, new ItemBuilder(Material.BARRIER).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
+            inv.setItem(46, new ItemBuilder(Material.REDSTONE).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
             inv.setItem(52, new ItemBuilder(Material.NETHER_STAR).setItemDisplayName("§a§l新增Lore").create());
 
             int count = 10;
@@ -537,8 +543,8 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
                     now.append(value.name()).append(", ");
                 }
             }
-            e.getWhoClicked().sendMessage(now.toString());
-            e.getWhoClicked().sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.please-input-text", "languages.please-input-text")));
+            ((Player) e.getWhoClicked()).sendMessage(now.toString());
+            ((Player) e.getWhoClicked()).sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.please-input-text", "languages.please-input-text")));
             PlayerInputUtil.getPlayerChat((Player) e.getWhoClicked(), this, "setType", e.getInventory(), s);
             Bukkit.getScheduler().runTask(plugin, () -> e.getWhoClicked().closeInventory());
             return;
@@ -555,7 +561,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
                 inv.setItem(integer, item);
             }
             inv.setItem(0, new ItemBuilder(Material.ARROW).setItemDisplayName("§a§l<- 返回上一页").create());
-            inv.setItem(46, new ItemBuilder(Material.BARRIER).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
+            inv.setItem(46, new ItemBuilder(Material.REDSTONE).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
             inv.setItem(52, new ItemBuilder(Material.NETHER_STAR).setItemDisplayName("§a§l直接把物品放进去就好").addItemLore("§a§l点我保存").create());
 
             int count = 10;
@@ -582,7 +588,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
                 inv.setItem(integer, item);
             }
             inv.setItem(0, new ItemBuilder(Material.ARROW).setItemDisplayName("§a§l<- 返回上一页").create());
-            inv.setItem(46, new ItemBuilder(Material.BARRIER).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
+            inv.setItem(46, new ItemBuilder(Material.REDSTONE).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
             inv.setItem(52, new ItemBuilder(Material.NETHER_STAR).setItemDisplayName("§a§l增加生物").create());
 
             int count = 10;
@@ -622,7 +628,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
                 inv.setItem(integer, item);
             }
             inv.setItem(0, new ItemBuilder(Material.ARROW).setItemDisplayName("§a§l<- 返回上一页").create());
-            inv.setItem(46, new ItemBuilder(Material.BARRIER).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
+            inv.setItem(46, new ItemBuilder(Material.REDSTONE).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
             inv.setItem(52, new ItemBuilder(Material.NETHER_STAR).setItemDisplayName("§a§l新增命令").addItemLore("§a注意：命令将由控制台执行").create());
 
             int count = 10;
@@ -645,7 +651,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
 
         if (e.getSlot() == 22) {
             //设置刷新时间
-            e.getWhoClicked().sendMessage("§c设置刷新间隔时间，格式：\n§a<最短间隔时间> <最长间隔时间>\n§a注意二者中间的空格，单位tick");
+            ((Player) e.getWhoClicked()).sendMessage("§c设置刷新间隔时间，格式：\n§a<最短间隔时间> <最长间隔时间>\n§a注意二者中间的空格，单位tick");
             PlayerInputUtil.getPlayerChat((Player) e.getWhoClicked(), this, "setTime", s);
             Bukkit.getScheduler().runTask(plugin, () -> e.getWhoClicked().closeInventory());
             return;
@@ -653,14 +659,14 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
 
         if (e.getSlot() == 3) {
             //设置激活半径
-            e.getWhoClicked().sendMessage("§c设置激活半径，单位格");
+            ((Player) e.getWhoClicked()).sendMessage("§c设置激活半径，单位格");
             PlayerInputUtil.getPlayerChat((Player) e.getWhoClicked(), this, "setPlayer", s);
             Bukkit.getScheduler().runTask(plugin, () -> e.getWhoClicked().closeInventory());
             return;
         }
 
         if (e.getSlot() == 5) {
-            e.getWhoClicked().sendMessage("§c设置激活半径内最大的实体数量");
+            ((Player) e.getWhoClicked()).sendMessage("§c设置激活半径内最大的实体数量");
             PlayerInputUtil.getPlayerChat((Player) e.getWhoClicked(), this, "setNum", s);
             Bukkit.getScheduler().runTask(plugin, () -> e.getWhoClicked().closeInventory());
         }
@@ -708,7 +714,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
                 inv.setItem(integer, item);
             }
             inv.setItem(0, new ItemBuilder(Material.ARROW).setItemDisplayName("§a§l<- 返回上一页").create());
-            inv.setItem(46, new ItemBuilder(Material.BARRIER).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
+            inv.setItem(46, new ItemBuilder(Material.REDSTONE).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
             inv.setItem(52, new ItemBuilder(Material.NETHER_STAR).setItemDisplayName("§a§l新增Lore").create());
 
             int count = 10;
@@ -791,7 +797,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
                 inv.setItem(integer, item);
             }
             inv.setItem(0, new ItemBuilder(Material.ARROW).setItemDisplayName("§a§l<- 返回上一页").create());
-            inv.setItem(46, new ItemBuilder(Material.BARRIER).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
+            inv.setItem(46, new ItemBuilder(Material.REDSTONE).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
             inv.setItem(52, new ItemBuilder(Material.NETHER_STAR).setItemDisplayName("§a§l增加生物").create());
 
             int count = 10;
@@ -840,7 +846,7 @@ public class EditorClickEvent implements Listener, PlayerInputCallBack {
                 inv.setItem(integer, item);
             }
             inv.setItem(0, new ItemBuilder(Material.ARROW).setItemDisplayName("§a§l<- 返回上一页").create());
-            inv.setItem(46, new ItemBuilder(Material.BARRIER).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
+            inv.setItem(46, new ItemBuilder(Material.REDSTONE).setItemDisplayName("§c§l清空全部").addItemLore("§c警告！本操作无法撤销").create());
             inv.setItem(52, new ItemBuilder(Material.NETHER_STAR).setItemDisplayName("§a§l新增命令").addItemLore("§a注意：命令将由控制台执行").create());
 
             int count = 10;

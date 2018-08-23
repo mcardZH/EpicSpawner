@@ -2,10 +2,7 @@ package cn.minezone.spawner.craftspawner;
 
 import cn.minezone.spawner.SpawnerPlugin;
 import de.tr7zw.itemnbtapi.NBTItem;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -170,7 +167,13 @@ public final class SpawnerApi {
      * @return 成功返回true，失败返回false（主要出现在放置错误的方块）
      */
     public static boolean regSpawnerBlockByEvent(BlockPlaceEvent event) {
-        return regSpawnerBlock(event.getPlayer(), event.getBlock(), new NBTItem(event.getItemInHand()).getString("spawnerName"));
+        if (Bukkit.getPluginManager().getPlugin(SpawnerPlugin.PLUGIN_NAME).getConfig().getBoolean("lore-mode", true)) {
+            String s = ChatColor.stripColor(event.getItemInHand().getItemMeta().getLore().get(event.getItemInHand().getItemMeta().getLore().size() - 1));
+            return regSpawnerBlock(event.getPlayer(), event.getBlock(), s);
+        } else {
+            return regSpawnerBlock(event.getPlayer(), event.getBlock(), new NBTItem(event.getItemInHand()).getString("spawnerName"));
+        }
+
     }
 
     /**

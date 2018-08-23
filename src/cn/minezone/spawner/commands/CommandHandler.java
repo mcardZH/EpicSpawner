@@ -1,5 +1,6 @@
 package cn.minezone.spawner.commands;
 
+import cn.minezone.spawner.SpawnerPlugin;
 import cn.minezone.spawner.builder.ItemBuilder;
 import cn.minezone.spawner.craftspawner.Spawner;
 import cn.minezone.spawner.craftspawner.SpawnerApi;
@@ -161,7 +162,7 @@ public class CommandHandler implements TabExecutor {
     }
 
     private void get(CommandSender s, String[] args) {
-        if (!s.hasPermission("epic.spawner.create")) {
+        if (!s.hasPermission("epic.spawner.get")) {
             s.sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.no-permission")));
             return;
         }
@@ -210,7 +211,7 @@ public class CommandHandler implements TabExecutor {
     }
 
     private void reload(CommandSender s, String[] args) {
-        if (!s.hasPermission("epic.spawner.delete")) {
+        if (!s.hasPermission("epic.spawner.reload")) {
             s.sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.no-permission")));
             return;
         }
@@ -219,6 +220,7 @@ public class CommandHandler implements TabExecutor {
             return;
         }
         SpawnerApi.reloadAllConfig();
+        Bukkit.getPluginManager().getPlugin(SpawnerPlugin.PLUGIN_NAME).reloadConfig();
         s.sendMessage(ChatColor.translateAlternateColorCodes(ALT_COLOR_CHAR, config.getString("languages.reload-success")));
     }
 

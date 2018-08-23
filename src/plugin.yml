@@ -1,8 +1,10 @@
 name: EpicSpawner
 main: cn.minezone.spawner.SpawnerPlugin
-version: 1.0
+version: 1.0.2
 
 author: mcard
+
+softdepend: [ItemNBTAPI]
 
 commands:
   epicspawner:

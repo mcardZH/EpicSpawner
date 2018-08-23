@@ -1,5 +1,6 @@
 package cn.minezone.spawner.craftspawner;
 
+import cn.minezone.spawner.SpawnerPlugin;
 import cn.minezone.spawner.builder.EntityBuilder;
 import cn.minezone.spawner.builder.ItemBuilder;
 import de.tr7zw.itemnbtapi.NBTItem;
@@ -174,14 +175,30 @@ public class CraftSpawner implements Spawner {
 
     @Override
     public ItemStack getSpawnerItem() {
-        NBTItem nbt = new NBTItem(new ItemBuilder(Material.MOB_SPAWNER)
-                .setItemDisplayName(displayName)
-                .setItemLore(lore)
-                .create());
-        nbt.setString("spawnerName", name);
+
+        if (Bukkit.getPluginManager().getPlugin(SpawnerPlugin.PLUGIN_NAME).getConfig().getBoolean("lore-mode", true)) {
+            if (ChatColor.stripColor(lore.get(lore.size() - 1)).equals(name)) {
+                return new ItemBuilder(Material.MOB_SPAWNER)
+                        .setItemDisplayName(displayName)
+                        .setItemLore(lore)
+                        .create();
+            }
+            return new ItemBuilder(Material.MOB_SPAWNER)
+                    .setItemDisplayName(displayName)
+                    .setItemLore(lore).addItemLore("§0" + name)
+                    .create();
+        } else {
+            NBTItem nbt = new NBTItem(new ItemBuilder(Material.MOB_SPAWNER)
+                    .setItemDisplayName(displayName)
+                    .setItemLore(lore)
+                    .create());
+            nbt.setString("spawnerName", name);
 
 
-        return nbt.getItem();
+            return nbt.getItem();
+        }
+
+
     }
 
     @Override

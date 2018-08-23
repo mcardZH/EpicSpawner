@@ -28,7 +28,7 @@ public class SpawnerPlugin extends JavaPlugin {
 
         //注册监听器
         Bukkit.getPluginManager().registerEvents(new MobSpawnEvent(), this);
-        Bukkit.getPluginManager().registerEvents(new SpawnerPlaceEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new SpawnerPlaceEvent(getConfig()), this);
         Bukkit.getPluginManager().registerEvents(new SpawnerBreakEvent(getConfig()), this);
         Bukkit.getPluginManager().registerEvents(new EditorClickEvent(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerInputHelper(), this);

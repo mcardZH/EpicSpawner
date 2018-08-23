@@ -67,8 +67,17 @@ public class EntityBuilder implements ConfigurationSerializable {
 
     public Entity spawn() {
         Entity entity = location.getWorld().spawnEntity(location, type);
-        entity.setCustomName(name);
-        entity.setCustomNameVisible(visible);
+        try {
+            entity.setCustomName(name);
+            if ("".equalsIgnoreCase(name)) {
+                entity.setCustomNameVisible(false);
+            } else {
+                entity.setCustomNameVisible(visible);
+            }
+        } catch (Exception ignored) {
+
+        }
+
         return entity;
     }
 

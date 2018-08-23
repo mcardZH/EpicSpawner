@@ -5,17 +5,19 @@ Only-owner-can-break-tip: '&C只有刷怪笼的所有者可以破坏刷怪笼！
 #掉落破坏的刷怪笼
 Drop-break-spawner: true
 
+lore-mode: false
+
 #部分配置文件
 languages:
   help:
-    - '&a-----------------[&c&lEpicSpawner&a]-----------------'
-    - '&a/es help &bView helps'
-    - '&a/es create {name} &bCreate a new spawner and open the edit gui'
-    - '&a/es get {name} [for player] &bGet a spawner item.'
-    - '&a/es delete {name} &bDelete a spawner.&cWarning!'
-    - '&a/es edit {name} &bOpen the edit gui'
-    - '&a/es list &bView all spawner'
-    - '&a/es reload &bReload configurations'
+  - '&a-----------------[&c&lEpicSpawner&a]-----------------'
+  - '&a/es help &b查看帮助'
+  - '&a/es create {name} &b创建并打开GUI编辑窗口'
+  - '&a/es get {name} [for player] &b获取刷怪笼'
+  - '&a/es delete {name} &b删除刷怪笼&c警告，此操作无法撤销'
+  - '&a/es edit {name} &b打开GUI编辑窗口'
+  - '&a/es list &b列出所有刷怪笼'
+  - '&a/es reload &b重载刷挂笼配置文件(主要是语言)'
   arguments-error: '&c参数错误！未知的子命令类型'
   arguments-length: '&c参数错误！提供的参数数量未被预期'
   no-permission: '&c你没有足够的权限这么做！'

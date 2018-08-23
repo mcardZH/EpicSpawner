@@ -83,8 +83,16 @@ public class MobRefreshRunnable extends BukkitRunnable {
     }
 
     private void refresh(Location loc, Spawner s) {
-        Collection<Entity> c = loc.getWorld().getNearbyEntities(loc, s.getActivateRadius(), s.getActivateRadius(), s.getActivateRadius());
-        int mobNum = c.size();
+        List<Entity> near = new ArrayList<>();
+        int ra = s.getActivateRadius();
+        for (Entity entity : loc.getWorld().getEntities()) {
+            Location l = entity.getLocation();
+            if (Math.abs(l.getX() - loc.getX()) <= ra && Math.abs(l.getY() - loc.getY()) <= ra && Math.abs(l.getZ() - loc.getZ()) <= ra) {
+                near.add(entity);
+            }
+        }
+
+        int mobNum = near.size();
         boolean player = false;
 //        for (Entity entity : c) {
 //            NBTEntity e = new NBTEntity(entity);
@@ -92,7 +100,8 @@ public class MobRefreshRunnable extends BukkitRunnable {
 //                mobNum++;
 //            }
 //        }
-        for (Entity entity : c) {
+        //原来使用getNearByEntities，但是1710没有这个方法
+        for (Entity entity : near) {
             if (entity instanceof Player) {
                 player = true;
                 mobNum--;
