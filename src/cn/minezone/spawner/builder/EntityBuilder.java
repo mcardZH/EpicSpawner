@@ -1,5 +1,6 @@
 package cn.minezone.spawner.builder;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Entity;
@@ -67,17 +68,15 @@ public class EntityBuilder implements ConfigurationSerializable {
 
     public Entity spawn() {
         Entity entity = location.getWorld().spawnEntity(location, type);
-        try {
-            entity.setCustomName(name);
-            if ("".equalsIgnoreCase(name)) {
-                entity.setCustomNameVisible(false);
-            } else {
-                entity.setCustomNameVisible(visible);
-            }
-        } catch (Exception ignored) {
-
+        if (Bukkit.getServer().getVersion().replace("_", ".").contains("1.7.10") || Bukkit.getServer().getVersion().replace("_", ".").contains("1.7.2")) {
+            return entity;
         }
-
+        entity.setCustomName(name);
+        if ("".equalsIgnoreCase(name)) {
+            entity.setCustomNameVisible(false);
+        } else {
+            entity.setCustomNameVisible(visible);
+        }
         return entity;
     }
 
